@@ -1,5 +1,5 @@
 class HashSet
-  attr_reader :count
+  attr_accessor :count, :store
 
   def initialize(num_buckets = 8)
     @store = Array.new(num_buckets) { Array.new }
@@ -7,12 +7,22 @@ class HashSet
   end
 
   def insert(key)
+    if !@store.include?(key)
+      @store[key.hash % num_buckets] = key
+      @count += 1
+      resize! if @count > @store.length
+    end
   end
 
   def include?(key)
+    @store.include?(key)
   end
 
   def remove(key)
+    if @store.include?(key)
+      @store.delete(key)
+      @count -= 1
+    end
   end
 
   private
@@ -26,5 +36,9 @@ class HashSet
   end
 
   def resize!
+    value = self.store
+    self.store = Array.new(value.length * 2) { Array.new }
+    self.count = 0
+    value.each { |ele| insert(ele)}
   end
 end

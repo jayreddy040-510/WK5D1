@@ -81,7 +81,7 @@ class ResizingIntSet
     if !@store.include?(num)
       @store[num % num_buckets] = num
       @count += 1
-      self.resize! if @count >= @store.length
+      resize! if @count >= @store.length
     end
   end
 
@@ -93,7 +93,7 @@ class ResizingIntSet
   end
 
 
-  # private
+  private
 
   def [](num)
     # optional but useful; return the bucket corresponding to `num`
