@@ -36,18 +36,22 @@ end
 
 
 class IntSet
+
   def initialize(num_buckets = 20)
+    @num_buckets = num_buckets
     @store = Array.new(num_buckets) { Array.new }
   end
 
   def insert(num)
-    @store[num % @store.length] = num
+    @store[num % num_buckets] = num
   end
 
   def remove(num)
+    @store[num % num_buckets] = []
   end
 
   def include?(num)
+    @store.include?(num)
   end
 
   private
